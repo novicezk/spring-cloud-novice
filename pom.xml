@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>spring-cloud-novice-starters</module>
+        <module>spring-cloud-novice-examples</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-build</artifactId>
+        <version>2.3.0.RELEASE</version>
+    </parent>
+
+    <groupId>com.novice.framework</groupId>
+    <artifactId>spring-cloud-novice</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <revision>1.0-SNAPSHOT</revision>
+        <java.version>11</java.version>
+        <spring.cloud.commons.version>2.2.3.RELEASE</spring.cloud.commons.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>${spring.cloud.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.novice.framework</groupId>
+                <artifactId>spring-cloud-starter-novice-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.novice.framework</groupId>
+                <artifactId>spring-cloud-starter-novice-discovery</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

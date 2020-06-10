@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.novice.framework.cloud.configuration.NoviceServerAutoConfiguration,\
+  com.novice.framework.cloud.configuration.RedisConfiguration
