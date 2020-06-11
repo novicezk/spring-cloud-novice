@@ -6,6 +6,7 @@
     <modules>
         <module>spring-cloud-novice-starters</module>
         <module>spring-cloud-novice-examples</module>
+        <module>spring-cloud-novice-commons</module>
     </modules>
 
     <parent>
@@ -33,6 +34,11 @@
                 <version>${spring.cloud.commons.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.novice.framework</groupId>
+                <artifactId>spring-cloud-novice-commons</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>com.novice.framework</groupId>
                 <artifactId>spring-cloud-starter-novice-server</artifactId>

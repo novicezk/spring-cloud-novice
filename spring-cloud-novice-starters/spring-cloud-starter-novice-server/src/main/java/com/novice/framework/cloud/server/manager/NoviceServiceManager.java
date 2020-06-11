@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,10 +33,12 @@ public class NoviceServiceManager {
 	}
 
 	public List<NoviceService> listAll() {
-		return this.cacheHelper.keys(this.cache).stream()
-				.map(key -> get(key).orElse(null))
-				.filter(Objects::nonNull)
-				.collect(Collectors.toList());
+		return getServiceNames().stream().map(key -> get(key).orElse(null))
+				.filter(Objects::nonNull).collect(Collectors.toList());
+	}
+
+	public Set<String> getServiceNames() {
+		return this.cacheHelper.keys(this.cache);
 	}
 
 	public void save(NoviceService service) {

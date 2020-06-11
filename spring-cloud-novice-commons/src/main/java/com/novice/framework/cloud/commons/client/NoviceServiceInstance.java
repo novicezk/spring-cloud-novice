@@ -3,8 +3,9 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
-package com.novice.framework.cloud.server.pojo;
+package com.novice.framework.cloud.commons.client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.cloud.client.ServiceInstance;
 
@@ -17,6 +18,7 @@ public class NoviceServiceInstance implements ServiceInstance, Serializable {
 	private static final long serialVersionUID = -8293962525932403021L;
 
 	private String instanceId;
+	private String scheme;
 	private String serviceId;
 	private String host;
 	private int port;
@@ -24,6 +26,7 @@ public class NoviceServiceInstance implements ServiceInstance, Serializable {
 	private Map<String, String> metadata;
 
 	@Override
+	@JsonIgnore
 	public URI getUri() {
 		String scheme = this.isSecure() ? "https" : "http";
 		String uri = String.format("%s://%s:%s", scheme, this.getHost(), this.getPort());

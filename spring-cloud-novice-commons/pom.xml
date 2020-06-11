@@ -6,23 +6,22 @@
 
     <parent>
         <groupId>com.novice.framework</groupId>
-        <artifactId>spring-cloud-novice-starters</artifactId>
+        <artifactId>spring-cloud-novice</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>spring-cloud-starter-novice-discovery</artifactId>
+    <artifactId>spring-cloud-novice-commons</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.novice.framework</groupId>
-            <artifactId>spring-cloud-novice-commons</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

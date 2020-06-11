@@ -5,6 +5,7 @@
  */
 package com.novice.framework.cloud.server.pojo;
 
+import com.novice.framework.cloud.commons.client.NoviceServiceInstance;
 import lombok.Data;
 
 import java.io.Serializable;

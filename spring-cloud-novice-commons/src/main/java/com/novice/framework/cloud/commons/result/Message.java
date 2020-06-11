@@ -1,4 +1,4 @@
-package com.novice.framework.cloud.server.result;
+package com.novice.framework.cloud.commons.result;
 
 import lombok.Data;
 
@@ -7,6 +7,9 @@ public class Message<T> {
 	private int code;
 	private String description;
 	private T result;
+
+	public Message() {
+	}
 
 	public Message(MessageCode code) {
 		this.code = code.getCode();
