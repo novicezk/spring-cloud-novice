@@ -1,6 +1,6 @@
 package com.novice.framework.cloud.server.cache;
 
-import com.novice.framework.cloud.server.exception.ValidationException;
+import com.novice.framework.cloud.commons.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.CacheType;

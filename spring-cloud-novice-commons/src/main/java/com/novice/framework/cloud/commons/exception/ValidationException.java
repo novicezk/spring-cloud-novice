@@ -1,4 +1,4 @@
-package com.novice.framework.cloud.server.exception;
+package com.novice.framework.cloud.commons.exception;
 
 
 public class ValidationException extends RuntimeException {

@@ -1,4 +1,4 @@
-package com.novice.framework.cloud.server.result;
+package com.novice.framework.cloud.commons.result;
 
 import lombok.Getter;
 

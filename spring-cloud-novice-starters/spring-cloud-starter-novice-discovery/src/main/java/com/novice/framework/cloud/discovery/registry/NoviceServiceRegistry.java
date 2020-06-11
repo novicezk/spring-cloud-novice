@@ -5,13 +5,17 @@
  */
 package com.novice.framework.cloud.discovery.registry;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
+import org.springframework.web.client.RestTemplate;
 
 public class NoviceServiceRegistry implements ServiceRegistry<NoviceRegistration> {
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public void register(NoviceRegistration registration) {
-		System.out.println("register.......");
+		this.restTemplate.put(registration.getServerAddr() + "/registry/register", registration);
 	}
 
 	@Override

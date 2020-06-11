@@ -37,5 +37,8 @@ public class NoviceDiscoveryProperties {
 		if (StringUtils.isEmpty(this.host)) {
 			this.host = this.inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
 		}
+		if (!StringUtils.startsWithIgnoreCase(this.serverAddr, "http")) {
+			this.serverAddr = "http://" + this.serverAddr;
+		}
 	}
 }

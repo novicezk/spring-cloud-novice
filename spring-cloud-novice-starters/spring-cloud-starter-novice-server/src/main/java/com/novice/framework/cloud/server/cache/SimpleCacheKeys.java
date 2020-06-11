@@ -1,6 +1,6 @@
 package com.novice.framework.cloud.server.cache;
 
-import com.novice.framework.cloud.server.exception.ValidationException;
+import com.novice.framework.cloud.commons.exception.ValidationException;
 import org.springframework.cache.Cache;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.stereotype.Component;
