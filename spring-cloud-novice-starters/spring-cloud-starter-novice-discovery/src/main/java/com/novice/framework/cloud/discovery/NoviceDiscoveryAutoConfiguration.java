@@ -26,8 +26,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @ConditionalOnDiscoveryEnabled
 @EnableConfigurationProperties(NoviceDiscoveryProperties.class)
-@AutoConfigureAfter({AutoServiceRegistrationConfiguration.class,
-		AutoServiceRegistrationAutoConfiguration.class})
+@AutoConfigureAfter({AutoServiceRegistrationConfiguration.class, AutoServiceRegistrationAutoConfiguration.class})
 public class NoviceDiscoveryAutoConfiguration {
 
 	@Bean
