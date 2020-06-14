@@ -1,12 +1,8 @@
-/*
- * Copyright 2004-2020 Homolo Co., Ltd. All rights reserved.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- * Proprietary and confidential.
- */
 package com.novice.framework.cloud.discovery.registry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 public class NoviceServiceRegistry implements ServiceRegistry<NoviceRegistration> {
@@ -20,22 +16,26 @@ public class NoviceServiceRegistry implements ServiceRegistry<NoviceRegistration
 
 	@Override
 	public void deregister(NoviceRegistration registration) {
-		System.out.println("deregister.......");
+		String deregisterUrl = registration.getServerAddr() + "/registry/deregister/{serviceName}/{instanceId}";
+		this.restTemplate.delete(deregisterUrl, registration.getServiceId(), registration.getInstanceId());
 	}
 
 	@Override
 	public void close() {
-		System.out.println("close.......");
+		// do nothing
 	}
 
 	@Override
 	public void setStatus(NoviceRegistration registration, String status) {
-		System.out.println("setStatus.......");
+		String setStatusUrl = registration.getServerAddr() + "/registry/{serviceName}/{instanceId}/setStatus/{status}";
+		this.restTemplate.execute(setStatusUrl, HttpMethod.POST, null, null, registration.getServiceId(), registration.getInstanceId(), status);
 	}
 
 	@Override
-	public <T> T getStatus(NoviceRegistration registration) {
-		System.out.println("getStatus.......");
-		return null;
+	@SuppressWarnings("unchecked")
+	public String getStatus(NoviceRegistration registration) {
+		String getStatusUrl = registration.getServerAddr() + "/registry/{serviceName}/{instanceId}/status";
+		return this.restTemplate.getForObject(getStatusUrl, String.class, registration.getServiceId(), registration.getInstanceId());
 	}
+
 }
