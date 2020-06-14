@@ -1,8 +1,3 @@
-/*
- * Copyright 2004-2020 Homolo Co., Ltd. All rights reserved.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- * Proprietary and confidential.
- */
 package com.novice.framework.cloud.commons.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,6 +16,7 @@ public class NoviceServiceInstance implements ServiceInstance, Serializable {
 	private String scheme;
 	private String serviceId;
 	private String host;
+	private String status;
 	private int port;
 	private boolean secure;
 	private Map<String, String> metadata;

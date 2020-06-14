@@ -1,8 +1,3 @@
-/*
- * Copyright 2004-2020 Homolo Co., Ltd. All rights reserved.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- * Proprietary and confidential.
- */
 package com.novice.framework.cloud.server.pojo;
 
 import com.novice.framework.cloud.commons.client.NoviceServiceInstance;
@@ -11,6 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class NoviceService implements Serializable {
@@ -24,5 +20,13 @@ public class NoviceService implements Serializable {
 
 	public NoviceService(String name) {
 		this.name = name;
+	}
+
+	public Optional<NoviceServiceInstance> getInstance(String instanceId) {
+		return this.instances.stream().filter(i -> i.getInstanceId().equals(instanceId)).findFirst();
+	}
+
+	public boolean removeInstance(String instanceId) {
+		return this.instances.removeIf(i -> i.getInstanceId().equals(instanceId));
 	}
 }

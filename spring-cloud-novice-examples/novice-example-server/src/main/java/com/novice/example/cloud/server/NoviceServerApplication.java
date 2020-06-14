@@ -1,8 +1,3 @@
-/*
- * Copyright 2004-2020 Homolo Co., Ltd. All rights reserved.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- * Proprietary and confidential.
- */
 package com.novice.example.cloud.server;
 
 import org.springframework.boot.SpringApplication;
