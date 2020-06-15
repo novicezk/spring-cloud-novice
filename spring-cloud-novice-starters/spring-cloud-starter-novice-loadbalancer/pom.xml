@@ -6,29 +6,26 @@
 
     <parent>
         <groupId>com.novice.framework</groupId>
-        <artifactId>spring-cloud-novice-examples</artifactId>
+        <artifactId>spring-cloud-novice-starters</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>novice-example-application</artifactId>
+    <artifactId>spring-cloud-starter-novice-loadbalancer</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.novice.framework</groupId>
-            <artifactId>spring-cloud-starter-novice-discovery</artifactId>
+            <artifactId>spring-cloud-novice-commons</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
