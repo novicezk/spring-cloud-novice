@@ -13,4 +13,4 @@ Spring Cloud 相关组件的简易实现
 
 ## 主要功能
 * **服务注册与发现**： 适配 Spring Cloud 服务注册与发现标准
-* **负载均衡**： 集成 spring-cloud-loadbalancer (未完成)
+* **负载均衡**： 适配 Spring Cloud 负载均衡标准 (未完成)

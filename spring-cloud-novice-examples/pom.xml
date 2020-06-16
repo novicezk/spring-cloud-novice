@@ -6,6 +6,7 @@
     <modules>
         <module>novice-example-server</module>
         <module>novice-example-service1</module>
+        <module>novice-example-service2</module>
     </modules>
 
     <parent>
