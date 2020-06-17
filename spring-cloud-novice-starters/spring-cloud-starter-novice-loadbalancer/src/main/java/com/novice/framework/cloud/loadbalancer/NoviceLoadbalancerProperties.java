@@ -8,5 +8,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties("spring.cloud.novice.loadbalancer")
 public class NoviceLoadbalancerProperties {
-	private ChooserType chooserType = ChooserType.ROUND_ROBIN;
+	private ChooserType chooserType = ChooserType.DEFAULT;
 }

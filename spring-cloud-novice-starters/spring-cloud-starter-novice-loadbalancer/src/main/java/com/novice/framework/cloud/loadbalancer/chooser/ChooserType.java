@@ -8,5 +8,7 @@ public enum ChooserType {
 	/**
 	 * 轮询.
 	 */
-	ROUND_ROBIN
+	ROUND_ROBIN;
+
+	public static final ChooserType DEFAULT = ROUND_ROBIN;
 }

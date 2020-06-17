@@ -6,13 +6,13 @@ import com.novice.framework.cloud.loadbalancer.chooser.RandomChooser;
 import com.novice.framework.cloud.loadbalancer.chooser.RoundRobinChooser;
 import com.novice.framework.cloud.loadbalancer.client.NoviceLoadBalancerClient;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.AsyncLoadBalancerAutoConfiguration;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 
@@ -32,14 +32,14 @@ public class NoviceLoadbalancerClientAutoConfiguration {
 		return new NoviceLoadBalancerClient(discoveryClient, chooser);
 	}
 
-	//	@Bean
-//	@ConditionalOnMissingBean
+	@Bean
+	@Conditional(ChooserCondition.class)
 	Chooser randomChooser() {
 		return new RandomChooser();
 	}
 
 	@Bean
-	@ConditionalOnMissingBean
+	@Conditional(ChooserCondition.class)
 	Chooser roundRobinChooser() {
 		return new RoundRobinChooser();
 	}

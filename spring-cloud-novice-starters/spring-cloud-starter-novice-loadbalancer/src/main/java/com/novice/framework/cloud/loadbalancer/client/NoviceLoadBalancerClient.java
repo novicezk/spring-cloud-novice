@@ -2,6 +2,7 @@ package com.novice.framework.cloud.loadbalancer.client;
 
 import com.novice.framework.cloud.loadbalancer.chooser.Chooser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 public class NoviceLoadBalancerClient implements LoadBalancerClient {
 	private final DiscoveryClient discoveryClient;
@@ -25,12 +27,15 @@ public class NoviceLoadBalancerClient implements LoadBalancerClient {
 
 	@Override
 	public <T> T execute(String serviceId, ServiceInstance serviceInstance, LoadBalancerRequest<T> request) throws IOException {
+		log.debug("service: {}, instance id: {}", serviceId, serviceInstance.getInstanceId());
 		try {
 			return request.apply(serviceInstance);
+		} catch (IOException e) {
+			throw e;
 		} catch (Exception e) {
 			ReflectionUtils.rethrowRuntimeException(e);
+			return null;
 		}
-		return null;
 	}
 
 	@Override
