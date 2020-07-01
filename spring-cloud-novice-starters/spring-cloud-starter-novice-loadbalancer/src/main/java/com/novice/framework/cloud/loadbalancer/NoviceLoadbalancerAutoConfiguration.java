@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnDiscoveryEnabled
 @EnableConfigurationProperties(NoviceLoadbalancerProperties.class)
 @AutoConfigureBefore({AsyncLoadBalancerAutoConfiguration.class, LoadBalancerAutoConfiguration.class})
-public class NoviceLoadbalancerClientAutoConfiguration {
+public class NoviceLoadbalancerAutoConfiguration {
 
 	@Bean
 	NoviceLoadbalancerProperties noviceLoadbalancerProperties() {
@@ -43,4 +43,5 @@ public class NoviceLoadbalancerClientAutoConfiguration {
 	Chooser roundRobinChooser() {
 		return new RoundRobinChooser();
 	}
+
 }
