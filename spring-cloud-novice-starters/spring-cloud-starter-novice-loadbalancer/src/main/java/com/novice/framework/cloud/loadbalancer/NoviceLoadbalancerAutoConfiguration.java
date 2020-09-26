@@ -1,18 +1,18 @@
 package com.novice.framework.cloud.loadbalancer;
 
 
-import com.novice.framework.cloud.loadbalancer.chooser.Chooser;
-import com.novice.framework.cloud.loadbalancer.chooser.RandomChooser;
-import com.novice.framework.cloud.loadbalancer.chooser.RoundRobinChooser;
 import com.novice.framework.cloud.loadbalancer.client.NoviceLoadBalancerClient;
+import com.novice.framework.cloud.loadbalancer.rule.BestAvailableRule;
+import com.novice.framework.cloud.loadbalancer.rule.IRule;
+import com.novice.framework.cloud.loadbalancer.support.ServiceLoadBalancerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.AsyncLoadBalancerAutoConfiguration;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 
@@ -28,20 +28,18 @@ public class NoviceLoadbalancerAutoConfiguration {
 	}
 
 	@Bean
-	NoviceLoadBalancerClient noviceLoadBalancerClient(DiscoveryClient discoveryClient, Chooser chooser) {
-		return new NoviceLoadBalancerClient(discoveryClient, chooser);
+	@ConditionalOnMissingBean
+	IRule defaultLoadbalancerRule() {
+		return new BestAvailableRule();
 	}
 
 	@Bean
-	@Conditional(ChooserCondition.class)
-	Chooser randomChooser() {
-		return new RandomChooser();
+	ServiceLoadBalancerFactory serviceLoadBalancerFactory(DiscoveryClient discoveryClient) {
+		return new ServiceLoadBalancerFactory(discoveryClient);
 	}
 
 	@Bean
-	@Conditional(ChooserCondition.class)
-	Chooser roundRobinChooser() {
-		return new RoundRobinChooser();
+	NoviceLoadBalancerClient noviceLoadBalancerClient(ServiceLoadBalancerFactory serviceLoadBalancerFactory, IRule rule) {
+		return new NoviceLoadBalancerClient(serviceLoadBalancerFactory, rule);
 	}
-
 }

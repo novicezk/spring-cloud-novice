@@ -3,6 +3,7 @@ package com.novice.framework.cloud.commons.support;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.novice.framework.cloud.commons.exception.ValidationException;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +35,7 @@ public final class RestTemplateHelper {
 		try {
 			return new ObjectMapper().readValue(result, typeReference);
 		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+			throw new ValidationException(e);
 		}
 	}
 

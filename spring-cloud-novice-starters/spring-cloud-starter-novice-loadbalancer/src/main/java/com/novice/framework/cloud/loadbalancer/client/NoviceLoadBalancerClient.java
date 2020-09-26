@@ -1,10 +1,10 @@
 package com.novice.framework.cloud.loadbalancer.client;
 
-import com.novice.framework.cloud.loadbalancer.chooser.Chooser;
-import lombok.RequiredArgsConstructor;
+import com.novice.framework.cloud.loadbalancer.rule.IRule;
+import com.novice.framework.cloud.loadbalancer.support.ServiceLoadBalancer;
+import com.novice.framework.cloud.loadbalancer.support.ServiceLoadBalancerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerRequest;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerUriTools;
@@ -12,13 +12,16 @@ import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 public class NoviceLoadBalancerClient implements LoadBalancerClient {
-	private final DiscoveryClient discoveryClient;
-	private final Chooser chooser;
+	private final ServiceLoadBalancerFactory loadBalancerFactory;
+	private final IRule rule;
+
+	public NoviceLoadBalancerClient(ServiceLoadBalancerFactory loadBalancerFactory, IRule rule) {
+		this.loadBalancerFactory = loadBalancerFactory;
+		this.rule = rule;
+	}
 
 	@Override
 	public <T> T execute(String serviceId, LoadBalancerRequest<T> request) throws IOException {
@@ -29,7 +32,7 @@ public class NoviceLoadBalancerClient implements LoadBalancerClient {
 	public <T> T execute(String serviceId, ServiceInstance serviceInstance, LoadBalancerRequest<T> request) throws IOException {
 		log.debug("service: {}, instance id: {}", serviceId, serviceInstance.getInstanceId());
 		try {
-			return request.apply(serviceInstance);
+			return this.loadBalancerFactory.loadBalancer(serviceId).execute(serviceInstance, request);
 		} catch (IOException e) {
 			throw e;
 		} catch (Exception e) {
@@ -45,10 +48,11 @@ public class NoviceLoadBalancerClient implements LoadBalancerClient {
 
 	@Override
 	public ServiceInstance choose(String serviceId) {
-		List<ServiceInstance> instances = this.discoveryClient.getInstances(serviceId);
-		if (instances.isEmpty()) {
+		ServiceLoadBalancer serviceLoadBalancer = this.loadBalancerFactory.loadBalancer(serviceId);
+		ServiceInstance instance = this.rule.choose(serviceLoadBalancer);
+		if (instance == null) {
 			throw new IllegalStateException("No instances available for " + serviceId);
 		}
-		return this.chooser.choose(instances);
+		return instance;
 	}
 }
