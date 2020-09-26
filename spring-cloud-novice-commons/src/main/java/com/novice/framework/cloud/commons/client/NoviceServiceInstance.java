@@ -2,6 +2,7 @@ package com.novice.framework.cloud.commons.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
 
 import java.io.Serializable;
@@ -24,9 +25,7 @@ public class NoviceServiceInstance implements ServiceInstance, Serializable {
 	@Override
 	@JsonIgnore
 	public URI getUri() {
-		String scheme = this.isSecure() ? "https" : "http";
-		String uri = String.format("%s://%s:%s", scheme, this.getHost(), this.getPort());
-		return URI.create(uri);
+		return DefaultServiceInstance.getUri(this);
 	}
 
 }

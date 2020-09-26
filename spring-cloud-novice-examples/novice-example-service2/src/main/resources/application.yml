@@ -1,9 +1,13 @@
 server:
-  port: 9001
+  port: 9201
 spring:
   application:
-    name: novice-example-application
+    name: novice-example-service2
   cloud:
     novice:
       discovery:
         server-addr: 127.0.0.1:9527
+logging:
+  level:
+    root: info
+    com.novice: debug

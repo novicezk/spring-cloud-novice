@@ -37,7 +37,7 @@ public class NoviceDiscoveryProperties {
 		if (StringUtils.isEmpty(this.instanceId)) {
 			this.instanceId = UUID.randomUUID().toString();
 		}
-		if (!StringUtils.startsWithIgnoreCase(this.serverAddr, "http")) {
+		if (this.serverAddr != null && !this.serverAddr.startsWith("http")) {
 			this.serverAddr = "http://" + this.serverAddr;
 		}
 	}

@@ -7,7 +7,6 @@ import com.novice.framework.cloud.discovery.registry.NoviceRegistration;
 import com.novice.framework.cloud.discovery.registry.NoviceServiceRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.serviceregistry.AutoServiceRegistrationAutoConfiguration;
@@ -15,7 +14,6 @@ import org.springframework.cloud.client.serviceregistry.AutoServiceRegistrationC
 import org.springframework.cloud.client.serviceregistry.AutoServiceRegistrationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
@@ -48,12 +46,6 @@ public class NoviceDiscoveryAutoConfiguration {
 	@ConditionalOnBean(AutoServiceRegistrationProperties.class)
 	NoviceAutoServiceRegistration noviceAutoServiceRegistration(AutoServiceRegistrationProperties autoServiceRegistrationProperties) {
 		return new NoviceAutoServiceRegistration(noviceServiceRegistry(), autoServiceRegistrationProperties, noviceRegistration());
-	}
-
-	@Bean
-	@ConditionalOnMissingBean
-	RestTemplate restTemplate() {
-		return new RestTemplate();
 	}
 
 }

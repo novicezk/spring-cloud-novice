@@ -1,26 +1,21 @@
 package com.novice.framework.cloud.discovery.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.novice.framework.cloud.commons.client.NoviceServiceInstance;
+import com.novice.framework.cloud.commons.support.RestTemplateHelper;
 import com.novice.framework.cloud.discovery.NoviceDiscoveryProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class NoviceDiscoveryClient implements DiscoveryClient {
 	private final NoviceDiscoveryProperties discoveryProperties;
-	@Autowired
-	private RestTemplate restTemplate;
 
 	@Override
 	public String description() {
@@ -30,31 +25,18 @@ public class NoviceDiscoveryClient implements DiscoveryClient {
 	@Override
 	public List<ServiceInstance> getInstances(String serviceId) {
 		String discoveryInstancesUrl = this.discoveryProperties.getServerAddr() + "/discovery/" + serviceId + "/instances";
-		String result = this.restTemplate.getForObject(discoveryInstancesUrl, String.class);
-		if (StringUtils.isEmpty(result)) {
+		List<NoviceServiceInstance> instances = RestTemplateHelper.getForTypeReference(discoveryInstancesUrl, new TypeReference<>() {
+		});
+		if (instances == null) {
 			return Collections.emptyList();
 		}
-		try {
-			List<NoviceServiceInstance> instances = new ObjectMapper().readValue(result, new TypeReference<>() {
-			});
-			return new ArrayList<>(instances);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
+		return instances.stream().map(i -> (ServiceInstance) i).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<String> getServices() {
 		String discoveryServicesUrl = this.discoveryProperties.getServerAddr() + "/discovery/services";
-		String result = this.restTemplate.getForObject(discoveryServicesUrl, String.class);
-		if (StringUtils.isEmpty(result)) {
-			return Collections.emptyList();
-		}
-		try {
-			return new ObjectMapper().readValue(result, new TypeReference<>() {
-			});
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
+		List<String> services = RestTemplateHelper.getForGeneric(discoveryServicesUrl);
+		return Optional.ofNullable(services).orElse(Collections.emptyList());
 	}
 }

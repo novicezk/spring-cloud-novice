@@ -6,6 +6,7 @@
     <modules>
         <module>spring-cloud-starter-novice-server</module>
         <module>spring-cloud-starter-novice-discovery</module>
+        <module>spring-cloud-starter-novice-loadbalancer</module>
     </modules>
 
     <parent>

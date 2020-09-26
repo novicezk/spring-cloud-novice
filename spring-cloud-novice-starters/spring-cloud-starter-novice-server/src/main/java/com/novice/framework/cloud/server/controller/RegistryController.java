@@ -33,6 +33,7 @@ public class RegistryController {
 		boolean exists = simpleService.getInstances().stream().anyMatch(i -> instanceId.equals(i.getInstanceId()));
 		if (!exists) {
 			NoviceServiceInstance instance = new NoviceServiceInstance();
+			instance.setStatus("UP");
 			BeanUtils.copyProperties(registerInstanceDTO, instance);
 			instance.setInstanceId(instanceId);
 			simpleService.getInstances().add(instance);

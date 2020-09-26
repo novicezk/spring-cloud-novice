@@ -25,9 +25,9 @@ public enum MessageCode {
 	FAILURE(9, "系统异常");
 
 	@Getter
-	private int code;
+	private final int code;
 	@Getter
-	private String description;
+	private final String description;
 
 	MessageCode(int code, String description) {
 		this.code = code;
